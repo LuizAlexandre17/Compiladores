@@ -21,10 +21,10 @@ public String returnCodes(int n){
         return "7 52 38 53 37 54 ";
     }
      else if(n == 3){
-        return "15 ";
+        return "";
     }
      else if(n == 4){
-        return "15 ";
+        return "";
     }
      else if(n == 5){
         return "40 7 52 ";
@@ -42,7 +42,7 @@ public String returnCodes(int n){
         return "23 ";
     }
     else if(n == 10){
-        return "15 ";
+        return "";
     }
     else if(n == 11){
         return "55 38 53 37 54 ";
@@ -69,7 +69,7 @@ public String returnCodes(int n){
         return "3 ";
     }
     else if(n == 19){
-        return "15 ";
+        return "";
     }
     else if(n == 20){
         return "5 ";
@@ -90,7 +90,7 @@ public String returnCodes(int n){
         return "15 ";
     }
     else if(n == 26){
-        return "15 ";
+        return "";
     }
     else if(n == 27){
         return "43 59 42 ";
@@ -165,7 +165,7 @@ public String returnCodes(int n){
         return "19 36 61 37 62 35 ";
     }
      else if(n == 51){
-        return "15 ";
+        return "";
     }
      else if(n == 52){
         return "1 43 7 67 42 36 61 37 62 35 ";

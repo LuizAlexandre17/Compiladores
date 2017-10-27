@@ -944,7 +944,7 @@ public class EditorTexto extends javax.swing.JFrame {
             }
             /* SINTATICO A PARTIR DESSA LINHA */
              try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 System.out.println("");
             }
@@ -954,13 +954,14 @@ public class EditorTexto extends javax.swing.JFrame {
                 String X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ int X = Integer.parseInt(X1.trim());
 
-                System.out.println("X> TOPO " + (X));
+                System.out.println("X> TOPO " + X);
 
                 //SintTrab = aux + SintTrab;
                 System.out.println("A > Chegou " + A);
                 /*Numero que que está entrando*/
-
-                if (X >= 48) {
+                int veff = 0;
+                int veff2 = 0;
+                while(X >= 48 && veff ==0) {
                     FunçãoMatriz fm = new FunçãoMatriz();
                     int x = fm.Parsing(X, A);
                     if(x == 999){
@@ -972,8 +973,19 @@ public class EditorTexto extends javax.swing.JFrame {
                         }
                     SintTrab = ltrim(SintTrab);
                     String add = fm.returnCodes(x);
+                    if(add.isEmpty()){
+                        System.out.println("BYUY");
+                        X1 = SintTrab.substring(0, 2).trim();
+                /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
+                veff2++;
+                    }
+                    else {
                     System.out.println("MASSA CARA: " + x);
                     SintTrab = add + SintTrab;
+                     X1 = SintTrab.substring(0, 2).trim();
+                /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
+                veff++;
+                    }
                 }
                 X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
@@ -984,7 +996,10 @@ public class EditorTexto extends javax.swing.JFrame {
 
                         SintTrab = ltrim(SintTrab);
                 }
-                else if (X < 48) {
+                X1 = SintTrab.substring(0, 2).trim();
+                /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
+                /* */
+                if (X < 48) {
                     if (X == A) {
                         if (SintTrab.length() > 2) {
                             SintTrab = SintTrab.substring(2);
@@ -994,7 +1009,7 @@ public class EditorTexto extends javax.swing.JFrame {
                         SintTrab = ltrim(SintTrab);
 
                     } else {
-                       JOptionPane.showMessageDialog(null, "ERRO! SINTATICO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                      
                     }
                 }
                 SintTable.setText(SintTrab);
