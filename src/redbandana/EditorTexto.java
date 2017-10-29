@@ -361,10 +361,10 @@ public class EditorTexto extends javax.swing.JFrame {
                 return 35;
             }
             case '(': {
-                return 42;
+                return 43;
             }
             case ')': {
-                return 43;
+                return 42;
             }
             case ':': {
                 return 38;
@@ -451,13 +451,17 @@ public class EditorTexto extends javax.swing.JFrame {
                     System.out.println("é menor igual 30");
                     
                     return 30;
-                } else {
+                } 
+                
+                else {
                     System.out.println("é menor 32");
                     return 32;
                     
                 }
             }
-            
+            case ';': {
+                return 37;
+            }
         }
         return -1;
     }
@@ -510,6 +514,9 @@ public class EditorTexto extends javax.swing.JFrame {
                 
                 break;
                 
+            }
+            case ';': {
+                return 37;
             }
             
         }
@@ -604,6 +611,10 @@ public class EditorTexto extends javax.swing.JFrame {
                     
                 }
             }
+            case ';': {
+                return 37;
+            }
+            
             
         }
         return -1;
@@ -713,7 +724,7 @@ public class EditorTexto extends javax.swing.JFrame {
                     }
                 }
                 
-                System.out.println("É Numero");
+               // System.out.println("É Numero");
                 String j = "";
                 char somachar = ch[i];
                 int vervirgula = 0;
@@ -751,7 +762,7 @@ public class EditorTexto extends javax.swing.JFrame {
                     
                     model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                 }
-                System.out.println("" + j);
+                //System.out.println("" + j);
                 
             } else if (Character.isLetter(ch[i]) && erro_comentario % 2 == 0 || ch[i] == '$' || ch[i] == '"' || ch[i] == '%') {
                 ver = 0;
@@ -759,9 +770,9 @@ public class EditorTexto extends javax.swing.JFrame {
                     ver = 1;
                 }
                 if (ch[i] == '"') {
-                    System.out.println("T" + erro_literal);
+                   // System.out.println("T" + erro_literal);
                     tokenSymbol(ch[i]);
-                    System.out.println("X" + erro_literal);
+                   // System.out.println("X" + erro_literal);
                     ver = 2;
                 }
                 if (ch[i] == '%') {
@@ -784,7 +795,7 @@ public class EditorTexto extends javax.swing.JFrame {
                         if (v + 1 < ch.length) {
                             if (ch[v + 1] == '"') {
                                 tokenSymbol(ch[v + 1]);
-                                System.out.println("pa" + erro_literal);
+                                //System.out.println("pa" + erro_literal);
                             }
                             if (ch[v + 1] == '%') {
                                 tokenSymbol(ch[v + 1]);
@@ -809,7 +820,7 @@ public class EditorTexto extends javax.swing.JFrame {
                 }
                 
                 if (j.length() == 1) {
-                    System.out.println("CHAR" + j);
+                    //System.out.println("CHAR" + j);
                     
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(8);
@@ -854,7 +865,7 @@ public class EditorTexto extends javax.swing.JFrame {
                         error++;
                     }
                     
-                    System.out.println("É espaço");
+                    //System.out.println("É espaço");
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(99);
                     cod.setCod("[ESPAÇO]");
@@ -865,12 +876,12 @@ public class EditorTexto extends javax.swing.JFrame {
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(99);
                     cod.setCod("[QUEBRA LINHA]");
-                    model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
+                    
                 } else {
-                    System.out.println("É especial");
-                    System.out.println(">>>" + ch[i]);
+                   // System.out.println("É especial");
+                   // System.out.println(">>>" + ch[i]);
                     if (Character.isDigit(ch[i]) || Character.isLetter(ch[i])) {
-                        System.out.println("ha");
+                       // System.out.println("ha");
                     } else {
                         int aux = -1;
                         if (i + 1 < ch.length) {
@@ -938,16 +949,31 @@ public class EditorTexto extends javax.swing.JFrame {
             if (funcao != 0) {
                 System.out.println("FUNCAO MASSA");
                 i = retornalinha2(compiler, i);
-                
+               
                 funcao = 0;
             }
             /* SINTATICO A PARTIR DESSA LINHA */
+            
+            
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException ex) {
                 System.out.println("");
             }
-            if (cod.getNumero() != 99 && SintTrab.substring(0, 2).trim() != "43") {
+            
+            System.err.println("XITAO" + cod.getCod());
+            if(cod.getNumero() == 0){
+                System.err.println("ERRO SIMBOLO" + ch[i]);
+                 cod.setLinha(retornalinha(compiler, i + 1));
+                            cod.setNumero(tokenSymbolV(ch[i]));
+                            String j = "" + ch[i];
+                            cod.setCod(j);
+                            System.out.println("" + cod.getNumero());
+                            model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
+                
+            }
+            
+            if (cod.getNumero() != 99 && SintTrab.substring(0, 2).trim() != "43" && cod.getNumero() != 0) {
                 String aux = cod.getNumero() + " ";
                 int A = cod.getNumero();
                 String X1 = SintTrab.substring(0, 2).trim();
@@ -958,13 +984,12 @@ public class EditorTexto extends javax.swing.JFrame {
                 //SintTrab = aux + SintTrab;
                 System.out.println("A > Chegou " + A);
                 /*Numero que que está entrando*/
-                int veff = 0;
-                int veff2 = 0;
-                while (X >= 48 && veff == 0) {
+               
+                while (X >= 48 ) {
                     FunçãoMatriz fm = new FunçãoMatriz();
                     int x = fm.Parsing(X, A);
                     if (x == 999) {
-                        error++;
+                        
                         JOptionPane.showMessageDialog(null, "ERRO! SINTATICO " + cod.getCod() + " Não é reconhecido", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                     }
                     if (SintTrab.length() > 2) {
@@ -977,7 +1002,12 @@ public class EditorTexto extends javax.swing.JFrame {
                         
                         X1 = SintTrab.substring(0, 2).trim();
                         /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
-                        veff2++;
+                        
+                        try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                System.out.println("");
+            }
                         String Aux = SintTable.getText();
                         String a = "15 " + SintTable.getText();
                         SintTable.setText(a);
@@ -994,7 +1024,7 @@ public class EditorTexto extends javax.swing.JFrame {
                         SintTrab = add + SintTrab;
                         X1 = SintTrab.substring(0, 2).trim();
                         /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
-                        veff++;
+                        
                     }
                 }
                 X1 = SintTrab.substring(0, 2).trim();
@@ -1017,6 +1047,8 @@ public class EditorTexto extends javax.swing.JFrame {
                 /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
                 /* */
                 if (X < 48) {
+                    System.err.println("X > "+ X);
+                    System.err.println("A > "+ A);
                     if (X == A) {
                         if (SintTrab.length() > 2) {
                             SintTrab = SintTrab.substring(2);
@@ -1025,7 +1057,7 @@ public class EditorTexto extends javax.swing.JFrame {
                         SintTrab = ltrim(SintTrab);
                         
                     } else {
-                        
+                        System.err.println("ERRO");
                     }
                 }
                 SintTable.setText(SintTrab);
@@ -1109,7 +1141,7 @@ public class EditorTexto extends javax.swing.JFrame {
             if (jc == '\n') {
                 
                 nlinhas++;
-                System.out.println("SOMOU" + nlinhas);
+                //("SOMOU" + nlinSystem.out.printlnhas);
             }
             
         }

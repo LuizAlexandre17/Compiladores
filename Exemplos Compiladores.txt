@@ -1,0 +1,34 @@
+1) void main { inicio; fim }
+
+2) void main { 
+inicio 2+2 = 2; fim}
+
+3)void main { 
+inicio $jao = 2; fim }
+
+4)void main {
+void $jao {
+inicio;fim return() } inicio;fim}
+
+5)void main {
+float $jao {
+inicio;fim return(2) } inicio;fim}
+
+6)void main {
+float $jao {
+$mano : float;
+inicio;fim return(2) } inicio;fim}
+
+7) void main {
+float $jao {
+$mano : float;
+inicio;fim return($mano) } inicio;fim}
+
+8) void main {
+float $jao {
+$mano : float;
+inicio
+$mano = 5;
+fim return($mano) }
+inicio;
+fim}
