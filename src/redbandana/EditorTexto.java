@@ -753,18 +753,28 @@ public class EditorTexto extends javax.swing.JFrame {
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(5); //Numero Inteiro
                     cod.setCod(j);
-                    
+                    int fa = Integer.parseInt(j);
+                    if(fa > 1000 || fa < -1000){
+                        error++;
+                                                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN: " + j + " na linha: " + retornalinha(compiler, i) + " NÃO É UM NUMERO ACEITO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                    }
                     model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                 } else {
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(6); //Numero Float
                     cod.setCod(j);
-                    
+                    int fa = Integer.parseInt(j);
+                    if(fa > 1000 || fa < -1000){
+                        error++;
+                                                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN: " + j + " na linha: " + retornalinha(compiler, i) + " NÃO É UM NUMERO ACEITO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                    }
                     model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                 }
                 //System.out.println("" + j);
                 
-            } else if (Character.isLetter(ch[i]) && erro_comentario % 2 == 0 || ch[i] == '$' || ch[i] == '"' || ch[i] == '%') {
+            } else if (Character.isLetter(ch[i]) && erro_comentario % 2 == 0 || ch[i] == '$' || ch[i] == '"' || ch[i] == '%' || ch[i] == '&') {
                 ver = 0;
                 if (ch[i] == '$') {
                     ver = 1;
@@ -820,15 +830,16 @@ public class EditorTexto extends javax.swing.JFrame {
                 }
                 
                 if (j.length() == 1) {
-                    //System.out.println("CHAR" + j);
+                    System.out.println("CHAR" + j);
                     
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(8);
-                    cod.setCod(j);
+                    cod.setCod(ch[i]+ ch[i+1] + "");
+                    System.out.println(""+cod.getCod());                  
                     if (erro_literal % 2 != 0) {
                         
                     } else {
-                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN " + ch[i - 1] + " NÃO ENCONTRADO, LINHA " + retornalinha(compiler, i) + "", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN " + ch[i] + " NÃO ENCONTRADO, LINHA " + retornalinha(compiler, i) + "", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                         error++;
                         
                         model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
@@ -973,7 +984,7 @@ public class EditorTexto extends javax.swing.JFrame {
                 
             }
             
-            if (cod.getNumero() != 99 && SintTrab.substring(0, 2).trim() != "43" && cod.getNumero() != 0) {
+            if (cod.getNumero() != 99 && SintTrab.substring(0, 2).trim() != "44" && cod.getNumero() != 0) {
                 String aux = cod.getNumero() + " ";
                 int A = cod.getNumero();
                 String X1 = SintTrab.substring(0, 2).trim();
@@ -1058,6 +1069,10 @@ public class EditorTexto extends javax.swing.JFrame {
                         
                     } else {
                         System.err.println("ERRO");
+                                    JOptionPane.showMessageDialog(null, "CODIGO " +cod.getCod() +" É INVALIDO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                        error++;
+                        
                     }
                 }
                 SintTable.setText(SintTrab);
@@ -1087,10 +1102,18 @@ public class EditorTexto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "ERRO! ASPAS NÃO FORAM FECHADAS OU LITERAL COM TIPO INVALIDO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
             
         }
+       int x = Integer.parseInt(SintTrab.substring(0, 2));
+       System.out.println("" +x);
+         if(x != 44){
+                                                 JOptionPane.showMessageDialog(null, "COMANDOS NÃO FINALIZADOS OU INVALIDOS" , "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+            
+        }
         if (error != 0) {
             model.setRowCount(0);
             SintTable.setText("");
         }
+       
     }
     
     private void error() {
