@@ -32,3 +32,25 @@ $mano = 5;
 fim return($mano) }
 inicio;
 fim}
+
+9)void main {
+float $media ( float;float ) {
+inicio
+$media = $notaum + $notadois ;
+fim
+return ($media) }
+inicio
+callfuncao $media ( $notaum,$notadois);
+fim
+}
+
+10)void main {
+float $media ( float;float ) {
+inicio
+$media = $notaum + $notadois ;
+fim
+return ($media) }
+inicio
+cout << %legal%;
+fim
+}

@@ -1,5 +1,6 @@
 package redbandana;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,16 +13,18 @@ import java.util.ArrayList;
 import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JScrollBar;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class EditorTexto extends javax.swing.JFrame {
-    
+
     private DefaultTableModel model = new DefaultTableModel();
-    
+
     private String[] columnNames = {"Numero", "Codigo", "Linha"};
     private ArrayList<JFrame> childs;
-    
+
     String fileName = "";
     int i = 0;
     int erro_comentario = 0;
@@ -33,15 +36,15 @@ public class EditorTexto extends javax.swing.JFrame {
     String SintTrab = "";
     int nn1 = 0;
     int nn2 = 0;
-    
+
     public EditorTexto() {
         initComponents();
         model.setColumnIdentifiers(columnNames);
         tabela.setModel(model);
         tabela.setSelectionMode(0);
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -80,6 +83,16 @@ public class EditorTexto extends javax.swing.JFrame {
 
             }
         ));
+        tabela.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tabelaComponentAdded(evt);
+            }
+        });
+        tabela.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                tabelaVetoableChange(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabela);
 
         SintTable.setColumns(20);
@@ -251,13 +264,21 @@ public class EditorTexto extends javax.swing.JFrame {
         SintTable.setText("48 44");
         nn1 = 0;
         nn2 = 0;
-        
+
         new Thread(() -> {
             compiler();
         }).start();
 
     }//GEN-LAST:event_ExecutarActionPerformed
-    
+
+    private void tabelaComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelaComponentAdded
+       
+    }//GEN-LAST:event_tabelaComponentAdded
+
+    private void tabelaVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_tabelaVetoableChange
+        
+    }//GEN-LAST:event_tabelaVetoableChange
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -316,7 +337,7 @@ public class EditorTexto extends javax.swing.JFrame {
         }
         save();
     }
-    
+
     private void save() {
         try {
             java.io.FileOutputStream out = new java.io.FileOutputStream(fileName, false);
@@ -325,9 +346,9 @@ public class EditorTexto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
-    
+
     private int tokenSymbolV(char tok) {
-        
+
         switch (tok) {
             case '@': {
                 System.out.println("Abre @");
@@ -378,26 +399,29 @@ public class EditorTexto extends javax.swing.JFrame {
             case '*': {
                 return 41;
             }
+            case ',': {
+                return 40;
+            }
         }
         return -1;
     }
-    
+
     private int tokenSymbolV(char tok, char tok2) {
-        
+
         switch (tok) {
             case '@': {
-                
+
                 return 97;
             }
             case '#': {
-                
+
                 return 98;
             }
-            
+
             case '+': {
                 if (tok2 == '+') {
                     System.out.println("é mais mais 33");
-                    
+
                     return 33;
                 } else {
                     System.out.println("é mais  34");
@@ -407,17 +431,17 @@ public class EditorTexto extends javax.swing.JFrame {
             case '-': {
                 if (tok2 == '-') {
                     System.out.println("é menos menos");
-                    
+
                     return 46;
-                    
+
                 }
                 System.out.println(" é menos");
                 return 47;
-                
+
             }
             case '=': {
                 if (tok2 == '=') {
-                    
+
                     return 28;
                 }
                 return 29;
@@ -425,38 +449,36 @@ public class EditorTexto extends javax.swing.JFrame {
             case '>': {
                 if (tok2 == '>') {
                     System.out.println("é cout 25");
-                    
+
                     return 25;
-                    
+
                 }
                 if (tok2 == '=') {
                     System.out.println("é maior igual 26");
-                    
+
                     return 26;
-                    
+
                 } else {
                     System.out.println("é maior 27");
-                    
+
                     return 27;
                 }
             }
             case '<': {
                 if (tok2 == '<') {
                     System.out.println("é cin 31");
-                    
+
                     return 31;
-                    
+
                 }
                 if (tok2 == '=') {
                     System.out.println("é menor igual 30");
-                    
+
                     return 30;
-                } 
-                
-                else {
+                } else {
                     System.out.println("é menor 32");
                     return 32;
-                    
+
                 }
             }
             case ';': {
@@ -465,9 +487,9 @@ public class EditorTexto extends javax.swing.JFrame {
         }
         return -1;
     }
-    
+
     private int tokenSymbol(char tok) {
-        
+
         switch (tok) {
             case '@': {
                 System.out.println("Abre @");
@@ -484,54 +506,54 @@ public class EditorTexto extends javax.swing.JFrame {
                 lit++;
                 break;
             }
-            
+
             case '"': {
                 System.out.println("ASPAS");
                 erro_literal++;
                 break;
             }
-            
+
             case '+': {
                 System.out.println("é mais 34");
                 break;
             }
-            
+
             case '-': {
-                
+
             }
-            
+
             case '=': {
-                
+
                 break;
             }
-            
+
             case '>': {
                 System.out.println("é cout 25");
                 break;
             }
-            
+
             case '<': {
-                
+
                 break;
-                
+
             }
             case ';': {
                 return 37;
             }
-            
+
         }
         return -1;
     }
-    
+
     private int tokenSymbol(char tok, char tok2) {
         if (erro_comentario % 2 == 0) {
             if (tok == '#') {
                 erro_comentario++;
-                
+
                 return -1;
-                
+
             }
-            
+
         }
         switch (tok) {
             case '@': {
@@ -547,13 +569,13 @@ public class EditorTexto extends javax.swing.JFrame {
                 erro_literal++;
                 break;
             }
-            
+
             case '+': {
                 if (tok2 == '+') {
                     System.out.println("é mais mais 33");
                     i++;
                     return 33;
-                    
+
                 }
                 System.out.println("é mais  34");
                 return 34;
@@ -563,11 +585,11 @@ public class EditorTexto extends javax.swing.JFrame {
                     System.out.println("é menos menos");
                     i++;
                     return 46;
-                    
+
                 }
                 System.out.println(" é menos");
                 return 47;
-                
+
             }
             case '=': {
                 if (tok2 == '=') {
@@ -581,16 +603,16 @@ public class EditorTexto extends javax.swing.JFrame {
                     System.out.println("é cout 25");
                     i++;
                     return 25;
-                    
+
                 }
                 if (tok2 == '=') {
                     System.out.println("é maior igual 26");
                     i++;
                     return 26;
-                    
+
                 } else {
                     System.out.println("é maior 27");
-                    
+
                     return 27;
                 }
             }
@@ -599,7 +621,7 @@ public class EditorTexto extends javax.swing.JFrame {
                     System.out.println("é cin 31");
                     i++;
                     return 31;
-                    
+
                 }
                 if (tok2 == '=') {
                     System.out.println("é menor igual 30");
@@ -608,18 +630,16 @@ public class EditorTexto extends javax.swing.JFrame {
                 } else {
                     System.out.println("é menor 32");
                     return 32;
-                    
+
                 }
             }
             case ';': {
                 return 37;
             }
-            
-            
         }
         return -1;
     }
-    
+
     private int tokenword(String palavra) {
         switch (palavra) {
             case "while": {
@@ -635,7 +655,7 @@ public class EditorTexto extends javax.swing.JFrame {
                 return 4;
             }
             case "string": {
-                
+
                 return 3;
             }
             case "main": {
@@ -692,24 +712,24 @@ public class EditorTexto extends javax.swing.JFrame {
         }
         return 999;
     }
-    
+
     private void imp(char[] ch) {
         for (int x = 0; x < ch.length; x++) {
             System.out.println("É Numero: " + ch[x]);
         }
-        
+
     }
-    
+
     private void compiler() {
         String compiler = jTextArea1.getText();
         tabela.setModel(model);
-        
+
         char[] ch = compiler.toCharArray();
         int somaespa = 0;
         imp(ch);
         for (i = 0; i < ch.length; i++) {
             codigo cod = new codigo();
-            
+
             if (Character.isDigit(ch[i]) && erro_comentario % 2 == 0) {
                 if (erro_literal % 2 != 0) {
                     model.setRowCount(0);
@@ -723,12 +743,12 @@ public class EditorTexto extends javax.swing.JFrame {
                         break;
                     }
                 }
-                
-               // System.out.println("É Numero");
+
+                // System.out.println("É Numero");
                 String j = "";
                 char somachar = ch[i];
                 int vervirgula = 0;
-                
+
                 for (int v = i; v < ch.length; v++) {
                     if (Character.isDigit(ch[v]) || ch[v] == ',') {
                         if (ch[v] == ',') {
@@ -743,7 +763,7 @@ public class EditorTexto extends javax.swing.JFrame {
                                 break;
                             }
                         }
-                        
+
                     } else {
                         i--;
                         break;
@@ -754,9 +774,9 @@ public class EditorTexto extends javax.swing.JFrame {
                     cod.setNumero(5); //Numero Inteiro
                     cod.setCod(j);
                     int fa = Integer.parseInt(j);
-                    if(fa > 1000 || fa < -1000){
+                    if (fa > 1000 || fa < -1000) {
                         error++;
-                                                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN: " + j + " na linha: " + retornalinha(compiler, i) + " NÃO É UM NUMERO ACEITO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN: " + j + " na linha: " + retornalinha(compiler, i) + " NÃO É UM NUMERO ACEITO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
                     }
                     model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
@@ -765,24 +785,24 @@ public class EditorTexto extends javax.swing.JFrame {
                     cod.setNumero(6); //Numero Float
                     cod.setCod(j);
                     int fa = Integer.parseInt(j);
-                    if(fa > 1000 || fa < -1000){
+                    if (fa > 1000 || fa < -1000) {
                         error++;
-                                                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN: " + j + " na linha: " + retornalinha(compiler, i) + " NÃO É UM NUMERO ACEITO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN: " + j + " na linha: " + retornalinha(compiler, i) + " NÃO É UM NUMERO ACEITO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
                     }
                     model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                 }
                 //System.out.println("" + j);
-                
+
             } else if (Character.isLetter(ch[i]) && erro_comentario % 2 == 0 || ch[i] == '$' || ch[i] == '"' || ch[i] == '%' || ch[i] == '&') {
                 ver = 0;
                 if (ch[i] == '$') {
                     ver = 1;
                 }
                 if (ch[i] == '"') {
-                   // System.out.println("T" + erro_literal);
+                    // System.out.println("T" + erro_literal);
                     tokenSymbol(ch[i]);
-                   // System.out.println("X" + erro_literal);
+                    // System.out.println("X" + erro_literal);
                     ver = 2;
                 }
                 if (ch[i] == '%') {
@@ -791,7 +811,7 @@ public class EditorTexto extends javax.swing.JFrame {
                 }
                 System.out.println("É caracter alfabetico");
                 String j = "";
-                
+
                 if (i + 1 < ch.length) {
                     if (Character.isDigit(ch[i])) {
                         JOptionPane.showMessageDialog(null, "ERRO! TOKxEN: " + ch[i] + " na linha: " + retornalinha(compiler, i) + " NÃO É RECONHECIDO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
@@ -799,7 +819,7 @@ public class EditorTexto extends javax.swing.JFrame {
                         break;
                     }
                 }
-                
+
                 for (int v = i; v < ch.length; v++) {
                     if (Character.isLetter(ch[v]) || ch[v] == '$' || ch[v] == '"' || ch[v] == '%') {
                         if (v + 1 < ch.length) {
@@ -809,13 +829,13 @@ public class EditorTexto extends javax.swing.JFrame {
                             }
                             if (ch[v + 1] == '%') {
                                 tokenSymbol(ch[v + 1]);
-                                
+
                             }
                         }
-                        
+
                         j = j.concat(Character.toString(ch[v]));
                         i++;
-                        
+
                     } else {
                         break;
                     }
@@ -826,56 +846,56 @@ public class EditorTexto extends javax.swing.JFrame {
                             break;
                         }
                     }
-                    
+
                 }
-                
+
                 if (j.length() == 1) {
                     System.out.println("CHAR" + j);
-                    
+
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(8);
-                    cod.setCod(ch[i]+ ch[i+1] + "");
-                    System.out.println(""+cod.getCod());                  
+                    cod.setCod(ch[i] + ch[i + 1] + "");
+                    System.out.println("" + cod.getCod());
                     if (erro_literal % 2 != 0) {
-                        
+
                     } else {
                         JOptionPane.showMessageDialog(null, "ERRO! TOKEN " + ch[i] + " NÃO ENCONTRADO, LINHA " + retornalinha(compiler, i) + "", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                         error++;
-                        
+
                         model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
-                        
+
                     }
-                    
+
                 } else {
                     System.out.println("STRING" + j);
-                    
+
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(tokenword(j));
                     cod.setCod(j);
-                    
+
                     if (erro_literal % 2 != 0 || tokenword(j) == 999) {
                         error++;
                         JOptionPane.showMessageDialog(null, "ERRO! TOKEN " + j + " NÃO ENCONTRADO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                     } else {
                         model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
-                        
+
                     }
-                    
+
                 }
                 i--;
             } else {
-                
+
                 char k = 'o';
                 k = ch[i];
-                
+
                 if (k == ' ' && erro_comentario % 2 == 0) {
-                    
+
                     if (erro_literal % 2 != 0) {
                         model.setRowCount(0);
                         JOptionPane.showMessageDialog(null, "ERRO! ESPAÇO NA LINHA" + i + "NÃO É LITERAL", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                         error++;
                     }
-                    
+
                     //System.out.println("É espaço");
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(99);
@@ -887,12 +907,12 @@ public class EditorTexto extends javax.swing.JFrame {
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(99);
                     cod.setCod("[QUEBRA LINHA]");
-                    
+
                 } else {
-                   // System.out.println("É especial");
-                   // System.out.println(">>>" + ch[i]);
+                    // System.out.println("É especial");
+                    // System.out.println(">>>" + ch[i]);
                     if (Character.isDigit(ch[i]) || Character.isLetter(ch[i])) {
-                       // System.out.println("ha");
+                        // System.out.println("ha");
                     } else {
                         int aux = -1;
                         if (i + 1 < ch.length) {
@@ -900,15 +920,15 @@ public class EditorTexto extends javax.swing.JFrame {
                                 aux = i + 1;
                             }
                         }
-                        
+
                         if (aux != -1) {
                             System.out.println("VALO 1:" + i);
                             int aux1 = 0;
                             aux1 = i;
                             tokenSymbol(ch[i], ch[aux]);
-                            
+
                             System.out.println("Entrou aq");
-                            
+
                             if (erro_literal % 2 != 0 && ch[i] != '"') {
                                 model.setRowCount(0);
                                 JOptionPane.showMessageDialog(null, "ERRO! SIMBOLO NÃO É LITERAL", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
@@ -921,18 +941,18 @@ public class EditorTexto extends javax.swing.JFrame {
                                 String j = "" + ch[i];
                                 cod.setCod(j);
                                 if (ch[i] == '@' || ch[i] == '#') {
-                                    
+
                                 } else {
                                     model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                                 }
-                                
+
                             } else if (!Character.isDigit(i)) {
                                 cod.setLinha(retornalinha(compiler, i + 1));
                                 cod.setNumero(tokenSymbolV(ch[i - 1], ch[i]));
                                 String j = "" + ch[i - 1] + ch[i] + "";
                                 System.out.println("ENTROU AQUI2");
                                 cod.setCod(j);
-                                
+
                                 model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                             }
                         } else if (!Character.isDigit(i)) {
@@ -948,59 +968,58 @@ public class EditorTexto extends javax.swing.JFrame {
                             String j = "" + ch[i];
                             cod.setCod(j);
                             if (ch[i] == '@' || ch[i] == '#') {
-                                
+
                             } else {
                                 model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                             }
                         }
-                        
+
                     }
                 }
             }
             if (funcao != 0) {
                 System.out.println("FUNCAO MASSA");
                 i = retornalinha2(compiler, i);
-               
+
                 funcao = 0;
             }
             /* SINTATICO A PARTIR DESSA LINHA */
-            
-            
+
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
                 System.out.println("");
             }
-            
+
             System.err.println("XITAO" + cod.getCod());
-            if(cod.getNumero() == 0){
+            if (cod.getNumero() == 0) {
                 System.err.println("ERRO SIMBOLO" + ch[i]);
-                 cod.setLinha(retornalinha(compiler, i + 1));
-                            cod.setNumero(tokenSymbolV(ch[i]));
-                            String j = "" + ch[i];
-                            cod.setCod(j);
-                            System.out.println("" + cod.getNumero());
-                            model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
-                
+                cod.setLinha(retornalinha(compiler, i + 1));
+                cod.setNumero(tokenSymbolV(ch[i]));
+                String j = "" + ch[i];
+                cod.setCod(j);
+                System.out.println("" + cod.getNumero());
+                model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
+
             }
-            
+
             if (cod.getNumero() != 99 && SintTrab.substring(0, 2).trim() != "44" && cod.getNumero() != 0) {
                 String aux = cod.getNumero() + " ";
                 int A = cod.getNumero();
                 String X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ int X = Integer.parseInt(X1.trim());
-                
+
                 System.out.println("X> TOPO " + X);
 
                 //SintTrab = aux + SintTrab;
                 System.out.println("A > Chegou " + A);
                 /*Numero que que está entrando*/
-               
-                while (X >= 48 ) {
+
+                while (X >= 48) {
                     FunçãoMatriz fm = new FunçãoMatriz();
                     int x = fm.Parsing(X, A);
                     if (x == 999) {
-                        
+
                         JOptionPane.showMessageDialog(null, "ERRO! SINTATICO " + cod.getCod() + " Não é reconhecido", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                     }
                     if (SintTrab.length() > 2) {
@@ -1010,78 +1029,75 @@ public class EditorTexto extends javax.swing.JFrame {
                     String add = fm.returnCodes(x);
                     if (add.isEmpty()) {
                         System.out.println("BYUY");
-                        
                         X1 = SintTrab.substring(0, 2).trim();
                         /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
-                        
                         try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                System.out.println("");
-            }
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ex) {
+                            System.out.println("");
+                        }
                         String Aux = SintTable.getText();
-                        String a = "15 " + SintTable.getText();
+                        String a = "15 " + SintTrab;
                         SintTable.setText(a);
-                        
-                         try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                System.out.println("");
-            }
-                         SintTable.setText(Aux);
-                        
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ex) {
+                            System.out.println("");
+                        }
+                        SintTable.setText(Aux);
+
                     } else {
                         System.out.println("MASSA CARA: " + x);
                         SintTrab = add + SintTrab;
                         X1 = SintTrab.substring(0, 2).trim();
                         /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
-                        
+
                     }
                 }
                 X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
                 if (X == 15) {
-                     try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                System.out.println("");
-            }
-                   
-                    
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        System.out.println("");
+                    }
+
                     if (SintTrab.length() > 2) {
                         SintTrab = SintTrab.substring(2);
                     }
-                    
+
                     SintTrab = ltrim(SintTrab);
                 }
                 X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
                 /* */
                 if (X < 48) {
-                    System.err.println("X > "+ X);
-                    System.err.println("A > "+ A);
+                    System.err.println("X > " + X);
+                    System.err.println("A > " + A);
                     if (X == A) {
                         if (SintTrab.length() > 2) {
                             SintTrab = SintTrab.substring(2);
                         }
-                        
+
                         SintTrab = ltrim(SintTrab);
-                        
+
                     } else {
                         System.err.println("ERRO");
-                                    JOptionPane.showMessageDialog(null, "CODIGO " +cod.getCod() +" É INVALIDO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "CODIGO " + cod.getCod() + " É INVALIDO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
                         error++;
-                        
+
                     }
                 }
                 SintTable.setText(SintTrab);
-                
+                selectAndScroll();
             }
             // * FUNÇÃO Para pausas aqui
-            
+
         }
-        
+
         codigo cod = new codigo();
         if (i == 1000) {
             i = ch.length;
@@ -1092,7 +1108,7 @@ public class EditorTexto extends javax.swing.JFrame {
         cod.setCod("[FINAL]");
         model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
         System.out.println("" + erro_comentario);
-        
+
         if (erro_comentario % 2 != 0) {
             model.setRowCount(0);
             JOptionPane.showMessageDialog(null, "ERRO! NÃO FOI FECHADO COMENTARIO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
@@ -1100,27 +1116,26 @@ public class EditorTexto extends javax.swing.JFrame {
         if (erro_literal % 2 != 0) {
             model.setRowCount(0);
             JOptionPane.showMessageDialog(null, "ERRO! ASPAS NÃO FORAM FECHADAS OU LITERAL COM TIPO INVALIDO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
-            
-        }
-       int x = Integer.parseInt(SintTrab.substring(0, 2));
-       System.out.println("" +x);
-         if(x != 44){
-                                                 JOptionPane.showMessageDialog(null, "COMANDOS NÃO FINALIZADOS OU INVALIDOS" , "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
-            
+        }
+        int x = Integer.parseInt(SintTrab.substring(0, 2));
+        System.out.println("" + x);
+        if (x != 44) {
+            JOptionPane.showMessageDialog(null, "COMANDOS NÃO FINALIZADOS OU INVALIDOS", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
         }
         if (error != 0) {
             model.setRowCount(0);
             SintTable.setText("");
         }
-       
+    selectAndScroll();
     }
-    
+
     private void error() {
-        
+
         JOptionPane.showMessageDialog(null, "d");
     }
-    
+
     public static String ltrim(String s) {
         int i = 0;
         while (i < s.length() && Character.isWhitespace(s.charAt(i))) {
@@ -1128,48 +1143,53 @@ public class EditorTexto extends javax.swing.JFrame {
         }
         return s.substring(i);
     }
-    
+
     private int retornalinha2(String comp, int pos) {
         char[] letras = comp.toCharArray();
         codigo cod = new codigo();
         int nlinhas = 0;
         int tam = comp.length();
-        
+
         for (int tax = pos; tax < tam; tax++) {
             char jc = 'o';
-            
+
             jc = letras[tax];
-            
+
             if (jc == '\n') {
                 System.out.println("POS> " + tax);
                 return tax;
-                
+
             }
-            
+
         }
-        
+
         return 999;
     }
-    
+
     private int retornalinha(String comp, int pos) {
         char[] letras = comp.toCharArray();
         codigo cod = new codigo();
         int nlinhas = 0;
-        
+
         for (int x = 0; x < pos - 1; x++) {
             char jc = 'o';
-            
+
             jc = letras[x];
-            
+
             if (jc == '\n') {
-                
+
                 nlinhas++;
                 //("SOMOU" + nlinSystem.out.printlnhas);
             }
-            
+
         }
-        
+
         return nlinhas + 1;
-        
+
     }
+    public void selectAndScroll()
+{
+  int maxValue = jScrollPane2.getVerticalScrollBar().getMaximum();
+jScrollPane2.getViewport().setViewPosition(new Point(0,maxValue));
+}
 }
