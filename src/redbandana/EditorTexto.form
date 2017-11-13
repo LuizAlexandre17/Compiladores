@@ -133,14 +133,22 @@
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Component id="jScrollPane3" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jScrollPane5" pref="190" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jScrollPane1" min="-2" pref="258" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane1" min="-2" pref="258" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="jScrollPane5" min="-2" pref="92" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane3" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -219,6 +227,48 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tabela2">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="0" rowCount="0"/>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="componentAdded" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="tabela2ComponentAdded"/>
+            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="tabela2VetoableChange"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

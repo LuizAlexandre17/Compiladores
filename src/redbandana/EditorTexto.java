@@ -21,8 +21,9 @@ import javax.swing.table.DefaultTableModel;
 public class EditorTexto extends javax.swing.JFrame {
 
     private DefaultTableModel model = new DefaultTableModel();
-
+    private DefaultTableModel model1 = new DefaultTableModel();
     private String[] columnNames = {"Numero", "Codigo", "Linha"};
+    private String[] columnNames1 = {"Nome","Tipo"};
     private ArrayList<JFrame> childs;
 
     String fileName = "";
@@ -36,10 +37,14 @@ public class EditorTexto extends javax.swing.JFrame {
     String SintTrab = "";
     int nn1 = 0;
     int nn2 = 0;
+    int ContadorDeclara=0;
 
     public EditorTexto() {
         initComponents();
         model.setColumnIdentifiers(columnNames);
+        model1.setColumnIdentifiers(columnNames1);
+        tabela2.setModel(model1);
+        tabela2.setSelectionMode(0);
         tabela.setModel(model);
         tabela.setSelectionMode(0);
 
@@ -55,6 +60,8 @@ public class EditorTexto extends javax.swing.JFrame {
         tabela = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         SintTable = new javax.swing.JTextArea();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tabela2 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuNovo = new javax.swing.JMenuItem();
@@ -98,6 +105,26 @@ public class EditorTexto extends javax.swing.JFrame {
         SintTable.setColumns(20);
         SintTable.setRows(5);
         jScrollPane3.setViewportView(SintTable);
+
+        tabela2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tabela2.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tabela2ComponentAdded(evt);
+            }
+        });
+        tabela2.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                tabela2VetoableChange(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tabela2);
 
         jMenuBar1.setForeground(new java.awt.Color(255, 51, 51));
 
@@ -185,12 +212,18 @@ public class EditorTexto extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane3))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -253,6 +286,7 @@ public class EditorTexto extends javax.swing.JFrame {
 
     private void ExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExecutarActionPerformed
         model.setRowCount(0);
+        model1.setRowCount(0);
         i = 0;
         erro_comentario = 0;
         erro_literal = 0;
@@ -264,7 +298,7 @@ public class EditorTexto extends javax.swing.JFrame {
         SintTable.setText("48 44");
         nn1 = 0;
         nn2 = 0;
-
+        ContadorDeclara=0;
         new Thread(() -> {
             compiler();
         }).start();
@@ -278,6 +312,14 @@ public class EditorTexto extends javax.swing.JFrame {
     private void tabelaVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_tabelaVetoableChange
         
     }//GEN-LAST:event_tabelaVetoableChange
+
+    private void tabela2ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabela2ComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabela2ComponentAdded
+
+    private void tabela2VetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_tabela2VetoableChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabela2VetoableChange
 
     public static void main(String args[]) {
         try {
@@ -322,9 +364,11 @@ public class EditorTexto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable tabela;
+    private javax.swing.JTable tabela2;
     // End of variables declaration//GEN-END:variables
 
     private void saveAs() {
@@ -1003,11 +1047,53 @@ public class EditorTexto extends javax.swing.JFrame {
 
             }
 
-            if (cod.getNumero() != 99 && SintTrab.substring(0, 2).trim() != "44" && cod.getNumero() != 0) {
+            if (cod.getNumero() != 99 &&  SintTrab.substring(0, 2).trim() != "44" && cod.getNumero() != 0) {
                 String aux = cod.getNumero() + " ";
                 int A = cod.getNumero();
                 String X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ int X = Integer.parseInt(X1.trim());
+                if(X>=90){
+                    if(X==90){
+                        int tam = tabela.getRowCount();
+                        String j = tabela.getValueAt((tam-2), 1).toString();
+                         System.out.println("ADICIONAR VARIAVEL> "+ j);  
+                         model1.addRow(new Object[]{} );
+                         tabela2.setValueAt(j, ContadorDeclara, 0);
+                         ContadorDeclara++;
+                        }
+                        else if(X==91){
+                             int tam = tabela.getRowCount();
+                        String j = tabela.getValueAt((tam-2), 1).toString();
+                         System.out.println("ESCREVER> "+ j);  
+                         tabela2.setValueAt(j, ContadorDeclara-1, 1);
+                         //FAZER FUNÇÃO QUE SUBSTITUI BRANCO POR TIPO
+                        }
+                        else if(X==92){
+                            //VERIFICAR SE JÁ É DECLARADO
+                            int tam = tabela.getRowCount();
+                        String j = tabela.getValueAt((tam-2), 1).toString();
+                         System.out.println("VERIFICA SE JA É DECLARADO> "+ j);  
+                         
+                        }
+                        else if(X==93){
+                            
+                        }
+                        else if(X==94){
+                            
+                        }
+                        else if(X==95){
+                            
+                        }
+                    
+                        SintTrab = SintTrab.substring(2);
+                        SintTrab = ltrim(SintTrab);
+                        System.err.println("PSIU ERRO");
+                         X1 = SintTrab.substring(0, 2).trim();
+                        /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
+                         System.err.println("PSIU ERRO" + X);
+                        SintTable.setText(SintTrab);
+                        
+                    }
 
                 System.out.println("X> TOPO " + X);
 
@@ -1016,14 +1102,59 @@ public class EditorTexto extends javax.swing.JFrame {
                 /*Numero que que está entrando*/
 
                 while (X >= 48) {
+                    if(X>=90){
+                        //REGRAS SEMANTICAS... VERIFICADOR.
+                        if(X==90){
+                        int tam = tabela.getRowCount();
+                        String j = tabela.getValueAt((tam-2), 1).toString();
+                         System.out.println("ADICIONAR VARIAVEL> "+ j);  
+                         model1.addRow(new Object[]{} );
+                         tabela2.setValueAt(j, ContadorDeclara, 0);
+                         ContadorDeclara++;
+                        }
+                        else if(X==91){
+                             int tam = tabela.getRowCount();
+                        String j = tabela.getValueAt((tam-2), 1).toString();
+                         System.out.println("ESCREVER> "+ j);  
+                         tabela2.setValueAt(j, ContadorDeclara-1, 1);
+                         //FAZER FUNÇÃO QUE SUBSTITUI BRANCO POR TIPO
+                        }
+                        else if(X==92){
+                            //VERIFICAR SE JÁ É DECLARADO
+                            int tam = tabela.getRowCount();
+                            System.out.println("xc>> "+tam);
+                        String j = tabela.getValueAt((tam), 1).toString();
+                         System.out.println("VERIFICA SE JA É DECLARADO> "+ j);  
+                         
+                        }
+                        else if(X==93){
+                            
+                        }
+                        else if(X==94){
+                            
+                        }
+                        else if(X==95){
+                            
+                        }
+                        SintTrab = SintTrab.substring(2);
+                        SintTrab = ltrim(SintTrab);
+                        System.err.println("PSIU ERRO");
+                         X1 = SintTrab.substring(0, 2).trim();
+                        /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
+                         System.err.println("PSIU ERRO" + X);
+                        SintTable.setText(SintTrab);
+                        
+                    }
+                    
                     FunçãoMatriz fm = new FunçãoMatriz();
                     int x = fm.Parsing(X, A);
                     if (x == 999) {
 
                         JOptionPane.showMessageDialog(null, "ERRO! SINTATICO " + cod.getCod() + " Não é reconhecido", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                     }
-                    if (SintTrab.length() > 2) {
+                    if (SintTrab.length() > 2 ) {
                         SintTrab = SintTrab.substring(2);
+                        
                     }
                     SintTrab = ltrim(SintTrab);
                     String add = fm.returnCodes(x);
@@ -1073,6 +1204,7 @@ public class EditorTexto extends javax.swing.JFrame {
                 X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
                 /* */
+                 
                 if (X < 48) {
                     System.err.println("X > " + X);
                     System.err.println("A > " + A);
