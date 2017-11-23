@@ -23,7 +23,7 @@ public class EditorTexto extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
     private DefaultTableModel model1 = new DefaultTableModel();
     private String[] columnNames = {"Numero", "Codigo", "Linha"};
-    private String[] columnNames1 = {"Nome","Tipo"};
+    private String[] columnNames1 = {"Nome", "Tipo"};
     private ArrayList<JFrame> childs;
 
     String fileName = "";
@@ -37,7 +37,7 @@ public class EditorTexto extends javax.swing.JFrame {
     String SintTrab = "";
     int nn1 = 0;
     int nn2 = 0;
-    int ContadorDeclara=0;
+    int ContadorDeclara = 0;
 
     public EditorTexto() {
         initComponents();
@@ -298,7 +298,7 @@ public class EditorTexto extends javax.swing.JFrame {
         SintTable.setText("48 44");
         nn1 = 0;
         nn2 = 0;
-        ContadorDeclara=0;
+        ContadorDeclara = 0;
         new Thread(() -> {
             compiler();
         }).start();
@@ -306,11 +306,11 @@ public class EditorTexto extends javax.swing.JFrame {
     }//GEN-LAST:event_ExecutarActionPerformed
 
     private void tabelaComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelaComponentAdded
-       
+
     }//GEN-LAST:event_tabelaComponentAdded
 
     private void tabelaVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_tabelaVetoableChange
-        
+
     }//GEN-LAST:event_tabelaVetoableChange
 
     private void tabela2ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabela2ComponentAdded
@@ -1047,53 +1047,62 @@ public class EditorTexto extends javax.swing.JFrame {
 
             }
 
-            if (cod.getNumero() != 99 &&  SintTrab.substring(0, 2).trim() != "44" && cod.getNumero() != 0) {
+            if (cod.getNumero() != 99 && SintTrab.substring(0, 2).trim() != "44" && cod.getNumero() != 0) {
                 String aux = cod.getNumero() + " ";
                 int A = cod.getNumero();
                 String X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ int X = Integer.parseInt(X1.trim());
-                if(X>=90){
-                    if(X==90){
+                if (X >= 90) {
+                    if (X == 90) {
                         int tam = tabela.getRowCount();
-                        String j = tabela.getValueAt((tam-2), 1).toString();
-                         System.out.println("ADICIONAR VARIAVEL> "+ j);  
-                         model1.addRow(new Object[]{} );
-                         tabela2.setValueAt(j, ContadorDeclara, 0);
-                         ContadorDeclara++;
+                        String j = tabela.getValueAt((tam - 2), 1).toString();
+                        System.out.println("ADICIONAR VARIAVEL> " + j);
+                        model1.addRow(new Object[]{});
+                        tabela2.setValueAt(j, ContadorDeclara, 0);
+                        ContadorDeclara++;
+                    } else if (X == 91) {
+                        int tam = tabela.getRowCount();
+                        String j = tabela.getValueAt((tam - 2), 1).toString();
+                        System.out.println("ESCREVER> " + j + ">>>>>>>>>>>>>>" + tabela2.getModel().getRowCount());
+
+                        tabela2.setValueAt(j, ContadorDeclara - 1, 1);
+                        //FAZER FUNÇÃO QUE SUBSTITUI BRANCO POR TIPO
+                        for (int v = tabela2.getModel().getRowCount() - 1; v >= 0; v--) {
+
+                            if (tabela2.getModel().getValueAt(v, 1) == null) {
+                                tabela2.setValueAt(j, v, 1);
+                            }
+
                         }
-                        else if(X==91){
-                             int tam = tabela.getRowCount();
-                        String j = tabela.getValueAt((tam-2), 1).toString();
-                         System.out.println("ESCREVER> "+ j);  
-                         tabela2.setValueAt(j, ContadorDeclara-1, 1);
-                         //FAZER FUNÇÃO QUE SUBSTITUI BRANCO POR TIPO
+                    } else if (X == 92) {
+                        //VERIFICAR SE JÁ É DECLARADO
+
+                        String j = tabela2.getValueAt(tabela2.getRowCount()-1, 0).toString();
+                        System.out.println("VERIFICA SE JA É DECLARADO>>> " + j);
+                        for (int v = tabela2.getModel().getRowCount() - 1; v >= 0; v--) {
+                            System.err.println("ERRO 1>" + tabela2.getModel().getValueAt(v, 0) + "X" + j);
+                            if (tabela2.getModel().getValueAt(v, 0) == j) {
+                                JOptionPane.showMessageDialog(null, "ERRO! VARIAVEL " + j + "JÁ DECLARADA", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                            }
+
                         }
-                        else if(X==92){
-                            //VERIFICAR SE JÁ É DECLARADO
-                            int tam = tabela.getRowCount();
-                        String j = tabela.getValueAt((tam-2), 1).toString();
-                         System.out.println("VERIFICA SE JA É DECLARADO> "+ j);  
-                         
-                        }
-                        else if(X==93){
-                            
-                        }
-                        else if(X==94){
-                            
-                        }
-                        else if(X==95){
-                            
-                        }
-                    
-                        SintTrab = SintTrab.substring(2);
-                        SintTrab = ltrim(SintTrab);
-                        System.err.println("PSIU ERRO");
-                         X1 = SintTrab.substring(0, 2).trim();
-                        /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
-                         System.err.println("PSIU ERRO" + X);
-                        SintTable.setText(SintTrab);
-                        
+                    } else if (X == 93) {
+
+                    } else if (X == 94) {
+
+                    } else if (X == 95) {
+
                     }
+
+                    SintTrab = SintTrab.substring(2);
+                    SintTrab = ltrim(SintTrab);
+                    System.err.println("PSIU ERRO");
+                    X1 = SintTrab.substring(0, 2).trim();
+                    /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
+                    System.err.println("PSIU ERRO" + X);
+                    SintTable.setText(SintTrab);
+
+                }
 
                 System.out.println("X> TOPO " + X);
 
@@ -1102,59 +1111,69 @@ public class EditorTexto extends javax.swing.JFrame {
                 /*Numero que que está entrando*/
 
                 while (X >= 48) {
-                    if(X>=90){
+
+                    if (X >= 90) {
                         //REGRAS SEMANTICAS... VERIFICADOR.
-                        if(X==90){
-                        int tam = tabela.getRowCount();
-                        String j = tabela.getValueAt((tam-2), 1).toString();
-                         System.out.println("ADICIONAR VARIAVEL> "+ j);  
-                         model1.addRow(new Object[]{} );
-                         tabela2.setValueAt(j, ContadorDeclara, 0);
-                         ContadorDeclara++;
-                        }
-                        else if(X==91){
-                             int tam = tabela.getRowCount();
-                        String j = tabela.getValueAt((tam-2), 1).toString();
-                         System.out.println("ESCREVER> "+ j);  
-                         tabela2.setValueAt(j, ContadorDeclara-1, 1);
-                         //FAZER FUNÇÃO QUE SUBSTITUI BRANCO POR TIPO
-                        }
-                        else if(X==92){
+                        if (X == 90) {
+                            int tam = tabela.getRowCount();
+                            String j = tabela.getValueAt((tam - 2), 1).toString();
+                            System.out.println("ADICIONAR VARIAVEL> " + j);
+                            model1.addRow(new Object[]{});
+                            tabela2.setValueAt(j, ContadorDeclara, 0);
+                            ContadorDeclara++;
+                        } else if (X == 91) {
+                            int tam = tabela.getRowCount();
+                            String j = tabela.getValueAt((tam - 2), 1).toString();
+                            System.out.println("ESCREVER> " + j + ">>>>>>>>>>>>>>" + tabela2.getModel().getRowCount());
+
+                            tabela2.setValueAt(j, ContadorDeclara - 1, 1);
+                            //FAZER FUNÇÃO QUE SUBSTITUI BRANCO POR TIPO
+                            for (int v = tabela2.getModel().getRowCount() - 1; v >= 0; v--) {
+
+                                if (tabela2.getModel().getValueAt(v, 1) == null) {
+                                    tabela2.setValueAt(j, v, 1);
+                                }
+
+                            }
+                        } else if (X == 92) {
                             //VERIFICAR SE JÁ É DECLARADO
                             int tam = tabela.getRowCount();
-                            System.out.println("xc>> "+tam);
-                        String j = tabela.getValueAt((tam), 1).toString();
-                         System.out.println("VERIFICA SE JA É DECLARADO> "+ j);  
-                         
+                            String j = tabela.getValueAt((tam - 4), 1).toString();
+                            System.out.println("VERIFICA SE JA É DECLARADO>>> " + j);
+                            for (int v = tabela2.getModel().getRowCount() - 1; v >= 0; v--) {
+                                System.err.println("ERRO 1>" + tabela2.getModel().getValueAt(v, 0) + "X" + j);
+                                if (tabela2.getModel().getValueAt(v, 0) == j) {
+                                    System.err.println("ERRO ERRO ERRO");
+                                }
+
+                            }
+                        } else if (X == 93) {
+
+                        } else if (X == 94) {
+
+                        } else if (X == 95) {
+
                         }
-                        else if(X==93){
-                            
-                        }
-                        else if(X==94){
-                            
-                        }
-                        else if(X==95){
-                            
-                        }
+
                         SintTrab = SintTrab.substring(2);
                         SintTrab = ltrim(SintTrab);
                         System.err.println("PSIU ERRO");
-                         X1 = SintTrab.substring(0, 2).trim();
+                        X1 = SintTrab.substring(0, 2).trim();
                         /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
-                         System.err.println("PSIU ERRO" + X);
+                        System.err.println("PSIU ERRO" + X);
                         SintTable.setText(SintTrab);
-                        
+
                     }
-                    
+
                     FunçãoMatriz fm = new FunçãoMatriz();
                     int x = fm.Parsing(X, A);
                     if (x == 999) {
 
                         JOptionPane.showMessageDialog(null, "ERRO! SINTATICO " + cod.getCod() + " Não é reconhecido", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                     }
-                    if (SintTrab.length() > 2 ) {
+                    if (SintTrab.length() > 2) {
                         SintTrab = SintTrab.substring(2);
-                        
+
                     }
                     SintTrab = ltrim(SintTrab);
                     String add = fm.returnCodes(x);
@@ -1204,7 +1223,7 @@ public class EditorTexto extends javax.swing.JFrame {
                 X1 = SintTrab.substring(0, 2).trim();
                 /*NUMERO NO TOPO DA PILHA*/ X = Integer.parseInt(X1.trim());
                 /* */
-                 
+
                 if (X < 48) {
                     System.err.println("X > " + X);
                     System.err.println("A > " + A);
@@ -1260,7 +1279,7 @@ public class EditorTexto extends javax.swing.JFrame {
             model.setRowCount(0);
             SintTable.setText("");
         }
-    selectAndScroll();
+        selectAndScroll();
     }
 
     private void error() {
@@ -1319,9 +1338,9 @@ public class EditorTexto extends javax.swing.JFrame {
         return nlinhas + 1;
 
     }
-    public void selectAndScroll()
-{
-  int maxValue = jScrollPane2.getVerticalScrollBar().getMaximum();
-jScrollPane2.getViewport().setViewPosition(new Point(0,maxValue));
-}
+
+    public void selectAndScroll() {
+        int maxValue = jScrollPane2.getVerticalScrollBar().getMaximum();
+        jScrollPane2.getViewport().setViewPosition(new Point(0, maxValue));
+    }
 }

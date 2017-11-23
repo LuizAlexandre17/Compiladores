@@ -18,7 +18,7 @@ public String returnCodes(int n){
         return "2 10 36 49 50 51 35 ";
     }
     else if(n == 2){
-        return "7 90 52 38 53 91 37 54 ";
+        return "7 90 52 38 53 91 37 92 54 ";
     }
      else if(n == 3){
         return "";
@@ -45,7 +45,7 @@ public String returnCodes(int n){
         return "";
     }
     else if(n == 11){
-        return "55 38 53 37 54 ";
+        return "55 90 38 53 37 54 ";
     }
     else if(n == 12){
         return "7 52 ";
