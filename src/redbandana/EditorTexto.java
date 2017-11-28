@@ -219,15 +219,12 @@ public class EditorTexto extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         pack();
@@ -1076,17 +1073,39 @@ public class EditorTexto extends javax.swing.JFrame {
                         }
                     } else if (X == 92) {
                         //VERIFICAR SE JÁ É DECLARADO
+                        System.err.println("TAMANHO DA TABELA > " + tabela2.getRowCount());
+                        System.err.println("TAM > " + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+                        if (tabela2.getRowCount() > 0) {
+                            String j = tabela2.getValueAt(tabela2.getRowCount() - 1, 0).toString();
+                            System.out.println("VERIFICA SE JA É DECLARADO>>> " + j);
 
-                        String j = tabela2.getValueAt(tabela2.getRowCount()-1, 0).toString();
-                        System.out.println("VERIFICA SE JA É DECLARADO>>> " + j);
-                        for (int v = tabela2.getModel().getRowCount() - 1; v >= 0; v--) {
-                            System.err.println("ERRO 1>" + tabela2.getModel().getValueAt(v, 0) + "X" + j);
-                            if (tabela2.getModel().getValueAt(v, 0) == j) {
-                                JOptionPane.showMessageDialog(null, "ERRO! VARIAVEL " + j + "JÁ DECLARADA", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                            for (int v = (tabela2.getModel().getRowCount() - 1); v > 0; v--) {
+                                System.err.println("ENTROU AQUI NA FUNCAO>  " + tabela2.getRowCount() + "  valor" + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+                                String value = tabela2.getValueAt(tabela2.getRowCount() - 1, 0).toString();
+                                int vf = 0;
+                                for (int v1 = (tabela2.getModel().getRowCount() - 1); v >= 0; v--) {
+
+                                    if (tabela2.getValueAt(tabela2.getRowCount() - 2, 0).toString().equals(value)) {
+                                        vf++;
+                                    }
+                                    if (vf > 0) {
+
+                                        JOptionPane.showMessageDialog(null, "VARIAVEL " + j + " JÁ DECLARADA " + tabela2.getModel().getValueAt(v, 0), "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                        break;
+                                    }
+                                    if (vf == 0) {
+                                        JOptionPane.showMessageDialog(null, "VARIAVEL  NÃO EXISTE", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                                    }
+
+                                }
+
                             }
-
                         }
+
                     } else if (X == 93) {
+                        //FUNÇÃO PARA VERIFICAR ATRIBUIÇÃO CORRETA
+                        
 
                     } else if (X == 94) {
 
@@ -1137,15 +1156,23 @@ public class EditorTexto extends javax.swing.JFrame {
                             }
                         } else if (X == 92) {
                             //VERIFICAR SE JÁ É DECLARADO
-                            int tam = tabela.getRowCount();
-                            String j = tabela.getValueAt((tam - 4), 1).toString();
-                            System.out.println("VERIFICA SE JA É DECLARADO>>> " + j);
-                            for (int v = tabela2.getModel().getRowCount() - 1; v >= 0; v--) {
-                                System.err.println("ERRO 1>" + tabela2.getModel().getValueAt(v, 0) + "X" + j);
-                                if (tabela2.getModel().getValueAt(v, 0) == j) {
-                                    System.err.println("ERRO ERRO ERRO");
-                                }
+                            System.err.println("TAMANHO DA TABELA > " + tabela2.getRowCount());
+                            System.err.println("TAM > " + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+                            if (tabela2.getRowCount() > 0) {
+                                String j = tabela2.getValueAt(tabela2.getRowCount() - 1, 0).toString();
+                                System.out.println("VERIFICA SE JA É DECLARADO>>> " + j);
 
+                                for (int v = (tabela2.getModel().getRowCount() - 1); v > 0; v--) {
+                                    String value = tabela2.getValueAt(tabela2.getRowCount() - 1, 0).toString();
+                                    for (int v1 = (tabela2.getModel().getRowCount() - 1); v >= 0; v--) {
+                                        if (tabela2.getValueAt(tabela2.getRowCount() - 1, 0).toString() == value) {
+                                            JOptionPane.showMessageDialog(null, "KABUUUUUUUM " + j + "JÁ DECLARADA " + tabela2.getModel().getValueAt(v, 0), "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                                        }
+                                    }
+                                    //System.err.println("ERRO 1>" + tabela2.getModel().getValueAt(v - 1, 0) + "X" + j);
+
+                                }
                             }
                         } else if (X == 93) {
 
