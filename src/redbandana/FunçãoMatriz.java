@@ -105,7 +105,7 @@ public String returnCodes(int n){
         return "15 ";
     }
     else if(n == 31){
-        return "13 61 37 62 18 ";
+        return "13 61 37 93 94 62 18 ";
     }
     else if(n == 32){
         return "";
@@ -123,7 +123,7 @@ public String returnCodes(int n){
         return "8 29 63 ";
     }
      else if(n == 37){
-        return "63 29 92 63 ";
+        return "63 29 63 ";
     }
      else if(n == 38){
         return "";

@@ -1057,6 +1057,7 @@ public class EditorTexto extends javax.swing.JFrame {
                         model1.addRow(new Object[]{});
                         tabela2.setValueAt(j, ContadorDeclara, 0);
                         ContadorDeclara++;
+
                     } else if (X == 91) {
                         int tam = tabela.getRowCount();
                         String j = tabela.getValueAt((tam - 2), 1).toString();
@@ -1072,10 +1073,15 @@ public class EditorTexto extends javax.swing.JFrame {
 
                         }
                     } else if (X == 92) {
-                        //VERIFICAR SE JÁ É DECLARADO
+                        //VERIFICAR SE JÁ É DECLARADO, MULTIPLAS VARIAVEIS
+
                         System.err.println("TAMANHO DA TABELA > " + tabela2.getRowCount());
-                        System.err.println("TAM > " + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+                        if (tabela2.getRowCount() == 0) {
+                            JOptionPane.showMessageDialog(null, "VARIAVEL  NÃO EXISTE", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                        }
                         if (tabela2.getRowCount() > 0) {
+                            System.err.println("TAM > " + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
                             String j = tabela2.getValueAt(tabela2.getRowCount() - 1, 0).toString();
                             System.out.println("VERIFICA SE JA É DECLARADO>>> " + j);
 
@@ -1104,8 +1110,29 @@ public class EditorTexto extends javax.swing.JFrame {
                         }
 
                     } else if (X == 93) {
-                        //FUNÇÃO PARA VERIFICAR ATRIBUIÇÃO CORRETA
-                        
+                        //VERIFICAR SE EXISTE
+                        String XX1 = retornaUltimaDeclaradaDepois();
+
+                        System.err.println("TAMANHO DA TABELA > " + tabela2.getRowCount());
+                        if (tabela2.getRowCount() == 0) {
+                            JOptionPane.showMessageDialog(null, "VARIAVEL " + XX1 + " NÃO EXISTE", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                        }
+                        if (tabela2.getRowCount() > 0) {
+
+                            int vf = 0;
+                            for (int v = (tabela2.getModel().getRowCount() - 1); v >= 0; v--) {
+                                System.err.println("ENTROU AQUI NA FUNCAO>  " + tabela2.getRowCount() + "  valor" + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+
+                                if (tabela2.getModel().getValueAt(v, 0).equals(XX1)) {
+                                    vf++;
+                                }
+                            }
+                            if (vf == 0) {
+                                JOptionPane.showMessageDialog(null, "VARIAVEL  NÃO EXISTE", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                            }
+                        }
 
                     } else if (X == 94) {
 
@@ -1156,6 +1183,8 @@ public class EditorTexto extends javax.swing.JFrame {
                             }
                         } else if (X == 92) {
                             //VERIFICAR SE JÁ É DECLARADO
+                            String xua = retornaUltimaDeclarada();
+
                             System.err.println("TAMANHO DA TABELA > " + tabela2.getRowCount());
                             System.err.println("TAM > " + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
                             if (tabela2.getRowCount() > 0) {
@@ -1177,6 +1206,45 @@ public class EditorTexto extends javax.swing.JFrame {
                         } else if (X == 93) {
 
                         } else if (X == 94) {
+                            // VERIFICAR SE TIPO CORRESPONDE
+
+                            String XX1 = "";
+                            int tipo = 0;
+                            for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
+
+                                if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("7")) {
+                                    XX1 = tabela.getModel().getValueAt(x, 1).toString();
+
+                                }
+                            }
+
+                            System.err.println("TAMANHO DA TABELA > " + tabela2.getRowCount());
+                            if (tabela2.getRowCount() == 0) {
+                                JOptionPane.showMessageDialog(null, "VARIAVEL " + XX1 + " NÃO EXISTE", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                            }
+                            if (tabela2.getRowCount() > 0) {
+
+                                int vf = 0;
+                                for (int v = (tabela2.getModel().getRowCount() - 1); v >= 0; v--) {
+                                    System.err.println("ENTROU AQUI NA FUNCAO>  " + tabela2.getRowCount() + "  valor" + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+
+                                    if (tabela2.getModel().getValueAt(v, 0).equals(XX1)) {
+                                        String t = tabela2.getModel().getValueAt(v, 1).toString();
+                                        if (t.equals("float")) {
+
+                                        } else if (t.equals("char")) {
+
+                                        } else if (t.equals("integer")) {
+
+                                        }
+                                    }
+                                }
+                                if (vf == 0) {
+                                    JOptionPane.showMessageDialog(null, "VARIAVEL  NÃO EXISTE", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                                }
+                            }
 
                         } else if (X == 95) {
 
@@ -1320,6 +1388,36 @@ public class EditorTexto extends javax.swing.JFrame {
             i++;
         }
         return s.substring(i);
+    }
+
+    private String retornaUltimaDeclarada() {
+        String ultima = "";
+        for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
+
+            if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("7")) {
+                ultima = tabela.getModel().getValueAt(x, 1).toString();
+
+                return ultima;
+
+            }
+        }
+
+        return ultima;
+    }
+
+    private String retornaUltimaDeclaradaDepois() {
+        String ultima = "";
+        for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
+
+            if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("29")) {
+                ultima = tabela.getModel().getValueAt((x - 1), 1).toString();
+
+                return ultima;
+
+            }
+        }
+
+        return ultima;
     }
 
     private int retornalinha2(String comp, int pos) {
