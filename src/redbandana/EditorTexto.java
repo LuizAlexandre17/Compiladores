@@ -825,12 +825,7 @@ public class EditorTexto extends javax.swing.JFrame {
                     cod.setLinha(retornalinha(compiler, i + 1));
                     cod.setNumero(6); //Numero Float
                     cod.setCod(j);
-                    int fa = Integer.parseInt(j);
-                    if (fa > 1000 || fa < -1000) {
-                        error++;
-                        JOptionPane.showMessageDialog(null, "ERRO! TOKEN: " + j + " na linha: " + retornalinha(compiler, i) + " NÃO É UM NUMERO ACEITO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
-                    }
                     model.addRow(new Object[]{cod.getNumero(), cod.getCod(), cod.getLinha()});
                 }
                 //System.out.println("" + j);
@@ -1141,6 +1136,53 @@ public class EditorTexto extends javax.swing.JFrame {
                         }
 
                     } else if (X == 94) {
+                        // VERIFICAR SE TIPO CORRESPONDE
+
+                        String PRINCIPAL = retornaUltimaDeclaradaDepois();
+                        int tipo = 0;
+                        boolean vk = true;
+                        if (tabela2.getRowCount() == 0) {
+                            vk = false;
+                        }
+                        if (tabela2.getRowCount() > 0 && !PRINCIPAL.trim().equals("")) {
+
+                            for (int v = (tabela2.getModel().getRowCount() - 1); v >= 0; v--) {
+                                System.err.println("ENTROU AQUI NA FUNCAO>  " + tabela2.getRowCount() + "  valor" + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+
+                                if (tabela2.getModel().getValueAt(v, 0).equals(PRINCIPAL)) {
+                                    String t = tabela2.getModel().getValueAt(v, 1).toString();
+                                    if (t.equals("float")) {
+                                        tipo = 6;
+                                        break;
+                                    } else if (t.equals("string")) {
+                                        tipo = 9;
+                                        break;
+                                    } else if (t.equals("integer")) {
+                                        tipo = 5;
+                                        break;
+
+                                    }
+                                }
+                            }
+
+                        }
+                        //VERIFICAR SE EXISTE VARIAVEIS DECLARADAS NA FUNÇÃO
+                        int tipo2 = 0;
+                        for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
+
+                            if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("7")) {
+                                JOptionPane.showMessageDialog(null, "TIPO 1>" + tipo + " TIPO 2>" + tipo2, "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                                tipo2 = Integer.parseInt(tabela.getModel().getValueAt(x, 0).toString());
+
+                                if (tipo != tipo2) {
+                                    JOptionPane.showMessageDialog(null, "ERRO ERRO 94", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                            if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("13") || tabela.getModel().getValueAt(x, 0).toString().trim().equals("29")) {
+                                break;
+                            }
+                        }
 
                     } else if (X == 95) {
 
@@ -1262,20 +1304,45 @@ public class EditorTexto extends javax.swing.JFrame {
                                         String t = tabela2.getModel().getValueAt(v, 1).toString();
                                         if (t.equals("float")) {
                                             tipo = 6;
+                                            break;
                                         } else if (t.equals("string")) {
                                             tipo = 9;
-
+                                            break;
                                         } else if (t.equals("integer")) {
                                             tipo = 5;
+                                            break;
 
                                         }
                                     }
                                 }
-                          }
-                            
-                            
+
+                            }
+                            //VERIFICAR SE EXISTE VARIAVEIS DECLARADAS NA FUNÇÃO
                             
 
+                            int tipo2 = 0;
+                            for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
+
+                                if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("7")) {
+                                    JOptionPane.showMessageDialog(null, "TIPO 1>" + tipo + " TIPO 2>" + tipo2, "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+
+                                    tipo2 = Integer.parseInt(tabela.getModel().getValueAt(x, 0).toString());
+
+                                    if (tipo != tipo2) {
+                                        JOptionPane.showMessageDialog(null, "ERRO ATRIBUIÇÃO INCORRETA!", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                } else if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("6") || tabela.getModel().getValueAt(x, 0).toString().trim().equals("9") || tabela.getModel().getValueAt(x, 0).toString().trim().equals("5")) {
+                                    tipo2 = Integer.parseInt(tabela.getModel().getValueAt(x, 0).toString());
+
+                                    if (tipo != tipo2) {
+                                        JOptionPane.showMessageDialog(null, "ERRO ATRIBUIÇÃO INCORRETA!  " + tipo + "  PARA> " + tipo2, "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }
+
+                                if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("13") || tabela.getModel().getValueAt(x, 0).toString().trim().equals("29")) {
+                                    break;
+                                }
+                            }
                         } else if (X == 95) {
 
                         }
