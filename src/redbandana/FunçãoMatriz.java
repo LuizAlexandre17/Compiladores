@@ -51,7 +51,7 @@ public String returnCodes(int n){
         return "7 52 ";
     }
     else if(n == 13){
-        return "56 7 57 36 49 50 51 4 43 58 42 35 50 ";
+        return "56 7 57 36 49 50 51 4 43 58 95 42 35 50 ";
     }
     else if(n == 14){
         return "12 ";

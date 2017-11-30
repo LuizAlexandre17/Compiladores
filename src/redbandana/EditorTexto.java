@@ -1185,6 +1185,26 @@ public class EditorTexto extends javax.swing.JFrame {
                         }
 
                     } else if (X == 95) {
+                        // VERIFICAR SE TIPO CORRESPONDE
+
+                        int PRINCIPAL = retornaUltimaDeclaradaDepois2();
+                        if (PRINCIPAL == 17) {
+                            PRINCIPAL = 6;
+                        } else if (PRINCIPAL == 12) {
+                            PRINCIPAL = 5;
+                        } else if (PRINCIPAL == 3) {
+                            PRINCIPAL = 9;
+
+                        }
+                        int SECUNDARIO = retornaTipoReturn();
+
+                        if (PRINCIPAL == SECUNDARIO) {
+                            JOptionPane.showMessageDialog(null, "VALOR CORRESPONDE A RETORNO", "FUNÇÃO 95", JOptionPane.ERROR_MESSAGE);
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "VALOR DE RETORNO NÃO CORRESPONDE A FUNÇÃO", "FUNÇÃO 95", JOptionPane.ERROR_MESSAGE);
+
+                        }
 
                     }
 
@@ -1318,7 +1338,6 @@ public class EditorTexto extends javax.swing.JFrame {
 
                             }
                             //VERIFICAR SE EXISTE VARIAVEIS DECLARADAS NA FUNÇÃO
-                            
 
                             int tipo2 = 0;
                             for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
@@ -1521,6 +1540,72 @@ public class EditorTexto extends javax.swing.JFrame {
         }
 
         return ultima;
+    }
+
+    private int retornaUltimaDeclaradaDepois2() {
+        String ultima = "";
+        for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
+
+            if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("36")) {
+                for (int j = x; j >= 0; j--) {
+                    if (tabela.getModel().getValueAt(j, 0).toString().trim().equals("7"));
+                    ultima = tabela.getModel().getValueAt((j - 2), 0).toString();
+                    int ret = Integer.parseInt(ultima);
+                    return ret;
+                }
+            }
+            if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("10")) {
+                ultima = "";
+
+                return 0;
+
+            }
+        }
+
+        return 0;
+
+    }
+
+    private int retornaTipoReturn() {
+        String ultima = "";
+        int ret = 0;
+        ultima = tabela.getModel().getValueAt(tabela.getModel().getRowCount() - 2, 0).toString();
+        if (!ultima.equals("7")) {
+            ret = Integer.parseInt(ultima);
+            return ret;
+        } else {
+            String PRINCIPAL = tabela.getModel().getValueAt(tabela.getModel().getRowCount() - 2, 1).toString();
+
+            int tipo = 0;
+            boolean vk = true;
+            if (tabela2.getRowCount() == 0) {
+                vk = false;
+            }
+            if (tabela2.getRowCount() > 0 && vk == true) {
+
+                for (int v = (tabela2.getModel().getRowCount() - 1); v >= 0; v--) {
+                    System.err.println("ENTROU AQUI NA FUNCAO>  " + tabela2.getRowCount() + "  valor" + tabela2.getValueAt(tabela2.getRowCount() - 1, 0));
+
+                    if (tabela2.getModel().getValueAt(v, 0).equals(PRINCIPAL)) {
+                        String t = tabela2.getModel().getValueAt(v, 1).toString();
+                        if (t.equals("float")) {
+                            return 6;
+
+                        } else if (t.equals("string")) {
+                            return 9;
+
+                        } else if (t.equals("integer")) {
+                            return 5;
+
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        return ret;
     }
 
     private int retornalinha2(String comp, int pos) {
