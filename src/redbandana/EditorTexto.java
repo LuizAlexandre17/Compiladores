@@ -1072,7 +1072,7 @@ public class EditorTexto extends javax.swing.JFrame {
 
                         System.err.println("TAMANHO DA TABELA > " + tabela2.getRowCount());
                         if (tabela2.getRowCount() == 0) {
-                            JOptionPane.showMessageDialog(null, "VARIAVEL  NÃO EXISTE", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "VARIAVEL  NÃO EXISTE, FUNÇÃO 92", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
                         }
                         if (tabela2.getRowCount() > 0) {
@@ -1086,12 +1086,9 @@ public class EditorTexto extends javax.swing.JFrame {
 
                                     if (tabela2.getValueAt(v1, 0).toString().equals(value) && v != v1) {
                                         vf++;
-                                        JOptionPane.showMessageDialog(null, "ENTROU E SOMOU" + vf, "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
-
                                     }
                                     if (vf > 0) {
-
-                                        JOptionPane.showMessageDialog(null, "VARIAVEL " + " JÁ DECLARADA " + tabela2.getModel().getValueAt(v, 0), "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "VARIAVEL " +value+ " JÁ DECLARADA, FUNÇÃO 92 " + tabela2.getModel().getValueAt(v, 0), "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                                         vf = 0;
                                         break;
                                     }
@@ -1110,7 +1107,7 @@ public class EditorTexto extends javax.swing.JFrame {
                                 ultima = tabela.getModel().getValueAt(x, 1).toString();
 
                                 if (tabela2.getRowCount() == 0) {
-                                    JOptionPane.showMessageDialog(null, "NENHUMA VARIAVEL DECLARADA", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "NENHUMA VARIAVEL DECLARADA, FUNÇÃO 93", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
                                 }
                                 if (tabela2.getRowCount() > 0) {
@@ -1123,7 +1120,7 @@ public class EditorTexto extends javax.swing.JFrame {
                                         }
                                     }
                                     if (vf == 0) {
-                                        JOptionPane.showMessageDialog(null, "VARIAVEL " + ultima + " NÃO FOI DECLARADA", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "VARIAVEL " + ultima + " NÃO FOI DECLARADA, FUNÇÃO 93", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
 
                                     }
 
@@ -1176,7 +1173,7 @@ public class EditorTexto extends javax.swing.JFrame {
                                 tipo2 = Integer.parseInt(tabela.getModel().getValueAt(x, 0).toString());
 
                                 if (tipo != tipo2) {
-                                    JOptionPane.showMessageDialog(null, "ERRO ERRO 94", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "O TIPO DA FUNÇÃO NÃO CORRESPONDE A ATRIBUIÇÃO", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
                                 }
                             }
                             if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("13") || tabela.getModel().getValueAt(x, 0).toString().trim().equals("29")) {
@@ -1278,10 +1275,10 @@ public class EditorTexto extends javax.swing.JFrame {
 
                                 if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("7")) {
                                     ultima = tabela.getModel().getValueAt(x, 1).toString();
-                                    JOptionPane.showMessageDialog(null, "ESTA VARIAVEL PASSOU AQUI" + ultima, "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "ESTA VARIAVEL PASSOU AQUI" + ultima, "FUNÇÃO 93", JOptionPane.ERROR_MESSAGE);
 
                                     if (tabela2.getRowCount() == 0) {
-                                        JOptionPane.showMessageDialog(null, "VARIAVEL NÃO EXISTE fx2", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "VARIAVEL NÃO EXISTE fx2", "FUNÇÃO 93", JOptionPane.ERROR_MESSAGE);
 
                                     }
                                     if (tabela2.getRowCount() > 0) {
@@ -1294,7 +1291,7 @@ public class EditorTexto extends javax.swing.JFrame {
                                             }
                                         }
                                         if (vf == 0) {
-                                            JOptionPane.showMessageDialog(null, "VARIAVEL NÃO EXISTE FUNÇÃO 93", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, "VARIAVEL NÃO EXISTE FUNÇÃO 93", "FUNÇÃO 93", JOptionPane.ERROR_MESSAGE);
 
                                         }
 
@@ -1343,18 +1340,18 @@ public class EditorTexto extends javax.swing.JFrame {
                             for (int x = tabela.getModel().getRowCount() - 1; x >= 0; x--) {
 
                                 if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("7")) {
-                                    JOptionPane.showMessageDialog(null, "TIPO 1>" + tipo + " TIPO 2>" + tipo2, "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "TIPO 1>" + tipo + " TIPO 2>" + tipo2, "FUNÇÃO 94", JOptionPane.ERROR_MESSAGE);
 
                                     tipo2 = Integer.parseInt(tabela.getModel().getValueAt(x, 0).toString());
 
                                     if (tipo != tipo2) {
-                                        JOptionPane.showMessageDialog(null, "ERRO ATRIBUIÇÃO INCORRETA!", "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "ERRO ATRIBUIÇÃO INCORRETA!", "FUNÇÃO 94", JOptionPane.ERROR_MESSAGE);
                                     }
                                 } else if (tabela.getModel().getValueAt(x, 0).toString().trim().equals("6") || tabela.getModel().getValueAt(x, 0).toString().trim().equals("9") || tabela.getModel().getValueAt(x, 0).toString().trim().equals("5")) {
                                     tipo2 = Integer.parseInt(tabela.getModel().getValueAt(x, 0).toString());
 
                                     if (tipo != tipo2) {
-                                        JOptionPane.showMessageDialog(null, "ERRO ATRIBUIÇÃO INCORRETA!  " + tipo + "  PARA> " + tipo2, "ERRO ENCONTRADO", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "ERRO ATRIBUIÇÃO INCORRETA!  " + tipo + "  PARA> " + tipo2, "FUNÇÃO 94", JOptionPane.ERROR_MESSAGE);
                                     }
                                 }
 
